@@ -1,8 +1,9 @@
 const Web3 = require('web3')
 
-//const testnet = `http://127.0.0.1:8545`
-const testnet = `https://ropsten.infura.io/v3/7fd177555cfe4aa1b47493fe4e00d4b6`
-
+var testnet = process.env.REACT_APP_NETWORK
+if (!testnet) {
+  testnet = `http://127.0.0.1:8545`
+}
 const networkToUse = testnet
 const web3 = new Web3(new Web3.providers.HttpProvider(networkToUse))
 
