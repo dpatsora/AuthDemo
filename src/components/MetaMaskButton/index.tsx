@@ -1,12 +1,11 @@
 import axios from 'axios';
-import { ethers } from 'ethers'
 import * as React from 'react';
 import { Web3Provider } from '@ethersproject/providers';
 import { useWeb3React as useWeb3ReactCore } from '@web3-react/core';
 import { InjectedConnector } from '@web3-react/injected-connector';
 import { MetaMaskLogo } from './MetaMaskLogo';
-import { getWalletBalance, getContractBalanceOf } from '../../scripts/getbalance.js';
-
+import { getWalletBalance } from '../../scripts/getbalance.js';
+//getContractBalanceOf
 export const injected = new InjectedConnector({ supportedChainIds: [1, 3, 4, 5, 42, 1337] });
 
 export const MetaMaskButton: React.FunctionComponent = () => {
@@ -19,8 +18,8 @@ export const MetaMaskButton: React.FunctionComponent = () => {
     } = useWeb3ReactCore<Web3Provider>();
     const [activatingConnector, setActivatingConnector] = React.useState<any>();
     const [balance, setBalance] = React.useState('');
-    const [ContractBalance, setContractBalance] = React.useState(['', '']);
-    const [contract, setContract] = React.useState("");
+    //const [ContractBalance, setContractBalance] = React.useState(['', '']);
+    //const [contract, setContract] = React.useState("");
     const [user, setUser] = React.useState<any>();
 
     const handleConnectWallet = React.useCallback(() => {
@@ -32,25 +31,25 @@ export const MetaMaskButton: React.FunctionComponent = () => {
         }
     }, [account, activate]);
 
-    function handleContractBalanceOf() {
-        console.log(contract)
-        async function ContractBalanceOf() {
-            const updatedBalance = await getContractBalanceOf(account, contract);
-            setContractBalance(updatedBalance);
-        }
+    // function handleContractBalanceOf() {
+    //     console.log(contract)
+    //     async function ContractBalanceOf() {
+    //         const updatedBalance = await getContractBalanceOf(account, contract);
+    //         setContractBalance(updatedBalance);
+    //     }
 
-        ContractBalanceOf()
+    //     ContractBalanceOf()
 
-    }
+    // }
 
     React.useEffect(() => {
         async function fetchBalance() {
             const updatedBalance = await getWalletBalance(account);
             setBalance(updatedBalance);
-            if (contract) {
-                const updatedContractBalance = await getContractBalanceOf(account, contract);
-                setContractBalance(updatedContractBalance);
-            }
+            // if (contract) {
+            //     const updatedContractBalance = await getContractBalanceOf(account, contract);
+            //     setContractBalance(updatedContractBalance);
+            // }
         }
 
         if (account) {
@@ -73,10 +72,13 @@ export const MetaMaskButton: React.FunctionComponent = () => {
 
     }, [error]);
 
-    const GoTrueURL = "http://localhost:8000/auth/v1";
+    var GoTrueURL = process.env.REACT_APP_GOTRUE
+    if (!GoTrueURL) {
+        GoTrueURL = "http://localhost:8000/auth/v1"
+    }
 
     const sendChallengeToken = (token: string) => {
-        const jwt2 = axios.post(`${GoTrueURL}/asymmetric_login`, {
+        axios.post(`${GoTrueURL}/asymmetric_login`, {
             key: account,
             challenge_token_signature: token,
         }).then((response: any) => {
@@ -128,7 +130,7 @@ export const MetaMaskButton: React.FunctionComponent = () => {
                 }).catch(err => console.log('Supabase error:', err));
             console.log('tokenGoTrue', tokenGoTrue);
         }
-
+        // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [account])
 
     return (
@@ -191,7 +193,7 @@ export const MetaMaskButton: React.FunctionComponent = () => {
                             Get contract balance
                         </button>
                     </form> */}
-                        {ContractBalance[0] !== "" ? (
+                        {/* {ContractBalance[0] !== "" ? (
 
                             <>
 
@@ -201,7 +203,7 @@ export const MetaMaskButton: React.FunctionComponent = () => {
                             </>
                         ) : (
                             <></>
-                        )}
+                        )} */}
 
                     </>
                 ) : (
