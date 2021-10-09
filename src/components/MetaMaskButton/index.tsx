@@ -44,17 +44,16 @@ export const MetaMaskButton: React.FunctionComponent = () => {
 
     React.useEffect(() => {
         async function fetchBalance() {
-            const updatedBalance = await getWalletBalance(account);
+            const updatedBalance = await getWalletBalance(account);            
             setBalance(updatedBalance);
+            //console.log("Balance:", updatedBalance)
             // if (contract) {
             //     const updatedContractBalance = await getContractBalanceOf(account, contract);
             //     setContractBalance(updatedContractBalance);
             // }
         }
-
         if (account) {
-            fetchBalance();
-
+            fetchBalance();            
         }
         if (activatingConnector &&
             activatingConnector === connector &&
@@ -82,8 +81,7 @@ export const MetaMaskButton: React.FunctionComponent = () => {
             key: account,
             challenge_token_signature: token,
         }).then((response: any) => {
-            console.log('jwt', response.data?.access_token);
-
+            console.log('JWT:', response.data?.access_token);
 
             axios.get(`${GoTrueURL}/user`, { headers: { "Authorization": `Bearer ${response.data?.access_token}` } })
                 .then(res => {
@@ -93,22 +91,15 @@ export const MetaMaskButton: React.FunctionComponent = () => {
 
                 })
                 .catch(error => console.log(error))
-
-
         }).catch(err => console.log('err', err))
-
-
     }
 
     const signMessage = async (provider: any, challengeToken: string) => {
         try {
-            console.log('Signer', provider.getSigner());
             const signer = provider.getSigner();
             const signature = await signer.signMessage(challengeToken);
             sendChallengeToken(signature);
-            console.log('signature', signature);
-
-
+            console.log('Signature:', signature);
         } catch (err) {
             console.log('err', err);
         }
@@ -116,19 +107,17 @@ export const MetaMaskButton: React.FunctionComponent = () => {
 
     React.useEffect(() => {
         if (account) {
-            console.log('get address', account);
+            console.log('Address:', account);
             setUser("")
-            const tokenGoTrue = axios.post(`${GoTrueURL}/sign_challenge`, {
+            axios.post(`${GoTrueURL}/sign_challenge`, {
                 key: account,
                 algorithm: 'ETH'
             })
                 .then((res: any) => {
                     const challengeToken = res.data?.challenge_token;
-                    console.log('go true response, token', res.data.challenge_token);
-
+                    console.log('Challenge token:', res.data.challenge_token);
                     signMessage(library!, challengeToken);
-                }).catch(err => console.log('Supabase error:', err));
-            console.log('tokenGoTrue', tokenGoTrue);
+                }).catch(err => console.log('GoTrue error:', err));
         }
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [account])
