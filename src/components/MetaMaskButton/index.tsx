@@ -142,7 +142,7 @@ export const MetaMaskButton: React.FunctionComponent = () => {
                             </div>
                             <h2 className="text-sm text-gray-700 font-bold mt-8">User balance:</h2>
                             <h3 className="text-xl md:text2xl lg:text-3xl font-bold text-transparent bg-clip-text bg-gradient-to-r from-purple-600 via-blue-600 to-blue-900">
-                                {balance} UNI
+                                {balance} ETH
                             </h3>
 
                         </div>

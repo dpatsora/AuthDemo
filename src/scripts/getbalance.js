@@ -60,24 +60,24 @@ let minABI = [
 //   // return ["0", "0"]
 // };
 
-export const getETHWalletBalance = async (account) => {
+export const getWalletBalance = async (account) => {
   var balanceWei = await web3.eth.getBalance(account || web3.eth.defaultAccount);
   var balance = await web3.utils.fromWei(balanceWei, 'ether');
   console.log(`Your ETH wallet balance is currently ${balance} ETH`)
   return balance;
 };
 
-export const getWalletBalance = async (account) => {
-  var tokenContract = new web3.eth.Contract(minABI, "0x1f9840a85d5af5bf1d1762f925bdaddc4201f984");
-  var bal = await tokenContract.methods.balanceOf(account).call(function (err, res) {
-    if (err) {
-      console.log("error:", err)
-      return
-    }    
-    return
-  })
-  return web3.utils.fromWei(bal)
-};
+// export const getWalletBalance = async (account) => {
+//   var tokenContract = new web3.eth.Contract(minABI, "0x1f9840a85d5af5bf1d1762f925bdaddc4201f984");
+//   var bal = await tokenContract.methods.balanceOf(account).call(function (err, res) {
+//     if (err) {
+//       console.log("error:", err)
+//       return
+//     }    
+//     return
+//   })
+//   return web3.utils.fromWei(bal)
+// };
 
 
 
