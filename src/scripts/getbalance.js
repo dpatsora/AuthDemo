@@ -20,24 +20,24 @@ const web3 = new Web3(new Web3.providers.HttpProvider(networkToUse))
 // ];
 
 
-let minABI = [
-  // balanceOf
-  {
-    "constant": true,
-    "inputs": [{ "name": "_owner", "type": "address" }],
-    "name": "balanceOf",
-    "outputs": [{ "name": "balance", "type": "uint256" }],
-    "type": "function"
-  },
-  {
-    "constant": true,
-    "inputs": [],
-    "name": "decimals",
-    "outputs": [{ "name": "", "type": "uint8" }],
-    "type": "function"
-  }
+// let minABI = [
+//   // balanceOf
+//   {
+//     "constant": true,
+//     "inputs": [{ "name": "_owner", "type": "address" }],
+//     "name": "balanceOf",
+//     "outputs": [{ "name": "balance", "type": "uint256" }],
+//     "type": "function"
+//   },
+//   {
+//     "constant": true,
+//     "inputs": [],
+//     "name": "decimals",
+//     "outputs": [{ "name": "", "type": "uint8" }],
+//     "type": "function"
+//   }
 
-];
+// ];
 
 
 //const contractAddress = "0xa25b1c8d99a9f43a71a7873ae29587e9ebb9dade"
